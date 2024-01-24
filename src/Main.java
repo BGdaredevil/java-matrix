@@ -1,3 +1,4 @@
+import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -12,8 +13,43 @@ public class Main {
 //        matrixAdder(sc);
 //        getMatrixIntersect(sc);
 //        sumMatrixElements(sc);
-        getMax2x2(sc);
+//        getMax2x2(sc);
+//        printDiagonals(sc);
+        sumDiagonals(sc);
 
+    }
+
+    private static void sumDiagonals(Scanner sc) {
+        int size = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray()[0];
+
+        ArrayDeque<Integer> first = new ArrayDeque<>(size);
+        ArrayDeque<Integer> second = new ArrayDeque<>(size);
+
+        for (int row = 0; row < size; row++) {
+            int[] readLine = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+            first.add(readLine[row]);
+            second.push(readLine[size - 1 - row]);
+        }
+
+        int sum = first.stream().mapToInt(Integer::intValue).sum() + second.stream().mapToInt(Integer::intValue).sum();
+
+        System.out.println(sum);
+    };
+
+    private static void printDiagonals(Scanner sc) {
+        int size = Integer.parseInt(sc.nextLine());
+
+        ArrayDeque<Integer> first = new ArrayDeque<>(size);
+        ArrayDeque<Integer> second = new ArrayDeque<>(size);
+
+        for (int row = 0; row < size; row++) {
+            int[] readLine = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+            first.add(readLine[row]);
+            second.push(readLine[size - 1 - row]);
+        }
+
+        System.out.println(first.stream().map(String::valueOf).collect(Collectors.joining(" ")));
+        System.out.println(second.stream().map(String::valueOf).collect(Collectors.joining(" ")));
     }
 
     private static void getMax2x2(Scanner sc) {
