@@ -10,7 +10,24 @@ public class Main {
         System.out.println("input");
 //        compareMatrix(sc);
 //        matrixAdder(sc);
-        getMatrixIntersect(sc);
+//        getMatrixIntersect(sc);
+        sumMatrixElements(sc);
+
+    }
+
+    private static void sumMatrixElements(Scanner sc) {
+        int[] rowCol = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+        int sum = 0;
+
+        for (int row = 0; row < rowCol[0]; row++) {
+            int[] readLine = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+            for (int col = 0; col < rowCol[1]; col++) {
+                sum += readLine[col];
+            }
+        }
+        System.out.println(rowCol[0]);
+        System.out.println(rowCol[1]);
+        System.out.println(sum);
     }
 
     private static void getMatrixIntersect(Scanner sc) {
