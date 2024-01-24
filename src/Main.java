@@ -1,5 +1,6 @@
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -7,9 +8,33 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         System.out.println("input");
-        compareMatrix(sc);
+//        compareMatrix(sc);
+        matrixAdder(sc);
     }
 
+    private  static void matrixAdder(Scanner sc) {
+        int[] widthHeight = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+        int[][] first = new int[widthHeight[0]][widthHeight[1]];
+        int[][] result = new int[widthHeight[0]][widthHeight[1]];
+
+        for (int rows = 0; rows < widthHeight[0]; rows++) {
+            int[] row = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+            if (widthHeight[1] >= 0) {
+                System.arraycopy(row, 0, first[rows], 0, widthHeight[1]);
+            }
+        }
+
+        for (int rows = 0; rows < widthHeight[0]; rows++) {
+            int[] row = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+            for (int cols = 0; cols < widthHeight[1]; cols++) {
+                result[rows][cols] = first[rows][cols] + row[cols];
+            }
+        }
+
+        for (int[] item: result) {
+            System.out.println(Arrays.stream(item).mapToObj(String::valueOf).collect(Collectors.joining(" ")));
+        }
+    }
     private static void compareMatrix(Scanner sc) {
         int[] widthHeightOne = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
 
