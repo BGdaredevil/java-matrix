@@ -15,8 +15,50 @@ public class Main {
 //        sumMatrixElements(sc);
 //        getMax2x2(sc);
 //        printDiagonals(sc);
-        sumDiagonals(sc);
+//        sumDiagonals(sc);
+        matrixLoader(sc);
+    }
 
+    private static void matrixLoader(Scanner sc) {
+        String[] params = sc.nextLine().split(" ");
+        int size = Integer.parseInt(params[0]);
+        int num = 1;
+        String mode = params[1];
+
+        int[][] result = new int[size][size];
+
+        if (mode.equals("A")) {
+            for (int col = 0; col < size; col++) {
+                for (int row = 0; row < size; row++) {
+                    result[row][col] = num++;
+                }
+            }
+            for (int[] row : result) {
+                System.out.println(Arrays.stream(row).mapToObj(String::valueOf).collect(Collectors.joining(" ")));
+            }
+            return;
+        }
+
+        if (mode.equals("B")) {
+            for (int col = 0; col < size; col++) {
+                if (col % 2 == 1) {
+                    for (int row = 0; row < size; row++) {
+                        result[size - 1 - row][col] = num++;
+                    }
+                } else {
+                    for (int row = 0; row < size; row++) {
+                        result[row][col] = num++;
+                    }
+                }
+            }
+
+            for (int[] row : result) {
+                System.out.println(Arrays.stream(row).mapToObj(String::valueOf).collect(Collectors.joining(" ")));
+            }
+            return;
+        }
+
+        System.out.println("invalid mode");
     }
 
     private static void sumDiagonals(Scanner sc) {
@@ -34,7 +76,9 @@ public class Main {
         int sum = first.stream().mapToInt(Integer::intValue).sum() + second.stream().mapToInt(Integer::intValue).sum();
 
         System.out.println(sum);
-    };
+    }
+
+    ;
 
     private static void printDiagonals(Scanner sc) {
         int size = Integer.parseInt(sc.nextLine());
