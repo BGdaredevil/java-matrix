@@ -9,10 +9,36 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         System.out.println("input");
 //        compareMatrix(sc);
-        matrixAdder(sc);
+//        matrixAdder(sc);
+        getMatrixIntersect(sc);
     }
 
-    private  static void matrixAdder(Scanner sc) {
+    private static void getMatrixIntersect(Scanner sc) {
+        int rows = Integer.parseInt(sc.nextLine());
+        int cols = Integer.parseInt(sc.nextLine());
+
+        String[][] initMatrix = new String[rows][cols];
+        String[][] result = new String[rows][cols];
+
+        for (int row = 0; row < rows; row++) {
+            String[] readLine = sc.nextLine().split(" ");
+            System.arraycopy(readLine, 0, initMatrix[row], 0, cols);
+        }
+
+        for (int row = 0; row < rows; row++) {
+            String[] readLine = sc.nextLine().split(" ");
+
+            for (int col = 0; col < cols; col++) {
+                result[row][col] = initMatrix[row][col].equals(readLine[col]) ? initMatrix[row][col] : "*";
+            }
+        }
+
+        for (String[] row : result) {
+            System.out.println(String.join(" ", row));
+        }
+    }
+
+    private static void matrixAdder(Scanner sc) {
         int[] widthHeight = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
         int[][] first = new int[widthHeight[0]][widthHeight[1]];
         int[][] result = new int[widthHeight[0]][widthHeight[1]];
@@ -31,10 +57,11 @@ public class Main {
             }
         }
 
-        for (int[] item: result) {
+        for (int[] item : result) {
             System.out.println(Arrays.stream(item).mapToObj(String::valueOf).collect(Collectors.joining(" ")));
         }
     }
+
     private static void compareMatrix(Scanner sc) {
         int[] widthHeightOne = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
 
@@ -65,7 +92,7 @@ public class Main {
 
         for (int row = 0; row < first.length; row++) {
             for (int col = 0; col < first[row].length; col++) {
-                if (first[row][col] != second[row][col])  {
+                if (first[row][col] != second[row][col]) {
                     System.out.println("not equal");
                     return;
                 }
