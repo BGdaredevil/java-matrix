@@ -11,7 +11,44 @@ public class Main {
 //        compareMatrix(sc);
 //        matrixAdder(sc);
 //        getMatrixIntersect(sc);
-        sumMatrixElements(sc);
+//        sumMatrixElements(sc);
+        getMax2x2(sc);
+
+    }
+
+    private static void getMax2x2(Scanner sc) {
+        int[] rowCol = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+        int[][] matrix = new int[rowCol[0]][rowCol[1]];
+
+        for (int row = 0; row < rowCol[0]; row++) {
+            int[] readLine = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+            System.arraycopy(readLine, 0, matrix[row], 0, rowCol[1]);
+        }
+
+        int rows = rowCol[0];
+        int cols = rowCol[1];
+        int maxSum = Integer.MIN_VALUE;
+        int[][] out = new int[2][2];
+
+        for (int row = 1; row < rows; row++) {
+            for (int col = 1; col < cols; col++) {
+                int sum = matrix[row][col] + matrix[row - 1][col] + matrix[row][col - 1] + matrix[row - 1][col - 1];
+
+                if (sum > maxSum) {
+                    maxSum = sum;
+                    out[0][0] = matrix[row - 1][col - 1];
+                    out[0][1] = matrix[row - 1][col];
+                    out[1][0] = matrix[row][col - 1];
+                    out[1][1] = matrix[row][col];
+                }
+
+            }
+        }
+
+        System.out.println(maxSum);
+        for (int[] item : out) {
+            System.out.println(Arrays.stream(item).mapToObj(String::valueOf).collect(Collectors.joining(" ")));
+        }
 
     }
 
