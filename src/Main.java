@@ -24,8 +24,55 @@ public class Main {
 //        rotateMatrix(sc);
 //        excelColumnNames(sc);
 //        checkChess(sc);
-        borderFlip(sc);
+//        borderFlip(sc);
+//        checkMagicSqare(sc);
+        traverseSpiral(sc);
 
+    }
+
+    private static void traverseSpiral(Scanner sc) {
+        int[] rowCol = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+        int rows = rowCol[0];
+        int cols = rowCol[1];
+    }
+
+    private static void checkMagicSqare(Scanner sc) {
+        int[] rowCol = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+        int rows = rowCol[0];
+        int cols = rowCol[1];
+
+        int[] rowSums = new int[rows];
+        int[] colSums = new int[cols];
+
+        ArrayDeque<Integer> first = new ArrayDeque<>(rows);
+        ArrayDeque<Integer> second = new ArrayDeque<>(cols);
+
+        int[][] board = new int[rows][cols];
+        for (int row = 0; row < rows; row++) {
+            int[] rowLine = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+            System.arraycopy(rowLine, 0, board[row], 0, cols);
+
+            first.add(rowLine[row]);
+            second.push(rowLine[rows - 1 - row]);
+
+            for (int col = 0; col < cols; col++) {
+                rowSums[row] += rowLine[col];
+                colSums[col] += rowLine[col];
+            }
+        }
+
+        int sumFirst = first.stream().mapToInt(Integer::intValue).sum();
+        int sumSecond = second.stream().mapToInt(Integer::intValue).sum();
+
+        boolean sameRows = Arrays.stream(rowSums).allMatch(value -> value == sumFirst);
+        boolean sameCols = Arrays.stream(colSums).allMatch(value -> value == sumFirst);
+
+        if (sumFirst == sumSecond && sameRows && sameCols) {
+            System.out.println("True");
+        } else {
+            System.out.println("False");
+
+        }
     }
 
     private static void borderFlip(Scanner sc) {
@@ -48,7 +95,7 @@ public class Main {
             board[r][c] = temp;
             temp = curr;
 
-            if (r==0&&c==0) {
+            if (r == 0 && c == 0) {
                 break;
             }
             if (c < cols - 1 && r == 0) {
