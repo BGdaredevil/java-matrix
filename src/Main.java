@@ -23,8 +23,56 @@ public class Main {
 //        sumBoundary(sc);
 //        rotateMatrix(sc);
 //        excelColumnNames(sc);
-        checkChess(sc);
+//        checkChess(sc);
+        borderFlip(sc);
 
+    }
+
+    private static void borderFlip(Scanner sc) {
+        int[] rowCol = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+        int rows = rowCol[0];
+        int cols = rowCol[1];
+
+        int[][] board = new int[rows][cols];
+        for (int row = 0; row < rows; row++) {
+            int[] rowLine = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+            System.arraycopy(rowLine, 0, board[row], 0, cols);
+        }
+
+        int r = 0;
+        int c = 1;
+        int temp = board[0][0];
+
+        while (true) {
+            int curr = board[r][c];
+            board[r][c] = temp;
+            temp = curr;
+
+            if (r==0&&c==0) {
+                break;
+            }
+            if (c < cols - 1 && r == 0) {
+                c++;
+                continue;
+            }
+            if (c == cols - 1 && r < rows - 1) {
+                r++;
+                continue;
+            }
+            if (c > 0 && r == rows - 1) {
+                c--;
+                continue;
+            }
+            if (c == 0) {
+                r--;
+                continue;
+            }
+            break;
+        }
+
+        for (int[] resRow : board) {
+            System.out.println(Arrays.stream(resRow).mapToObj(String::valueOf).collect(Collectors.joining(" ")));
+        }
     }
 
     private static void checkChess(Scanner sc) {
@@ -94,8 +142,8 @@ public class Main {
                 }
 
                 int secondFound = 0;
-                while (secondR<rows && secondC >=0) {
-                    if (secondC >= cols ) {
+                while (secondR < rows && secondC >= 0) {
+                    if (secondC >= cols) {
                         secondR++;
                         secondC--;
                         continue;
@@ -114,14 +162,14 @@ public class Main {
                 }
 
                 /*
-                * 0 - 0 - 0        0 0 0 0 0 0
-                * 0 0 1 0 0        0 0 0 0 0 0
-                * 0 - 0 - 0        0 0 0 0 0 0
-                * - 0 0 0 -        0 1 0 0 0 0
-                * 0 0 0 0 0        0 0 0 0 0 0
-                *                  0 0 0 0 0 0
+                 * 0 - 0 - 0        0 0 0 0 0 0
+                 * 0 0 1 0 0        0 0 0 0 0 0
+                 * 0 - 0 - 0        0 0 0 0 0 0
+                 * - 0 0 0 -        0 1 0 0 0 0
+                 * 0 0 0 0 0        0 0 0 0 0 0
+                 *                  0 0 0 0 0 0
 
-                */
+                 */
 
             }
         }
