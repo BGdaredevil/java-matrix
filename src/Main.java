@@ -16,7 +16,27 @@ public class Main {
 //        getMax2x2(sc);
 //        printDiagonals(sc);
 //        sumDiagonals(sc);
-        matrixLoader(sc);
+//        matrixLoader(sc);
+        matrixSumRowsCols(sc);
+
+    }
+
+    private static void matrixSumRowsCols(Scanner sc) {
+        int[] rowCol = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+        int[] rowSums = new int[rowCol[0]];
+        int[] colSums = new int[rowCol[1]];
+
+        for (int row = 0; row < rowCol[0]; row++) {
+            int[] lineRow = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+            for (int col = 0; col < rowCol[1]; col++) {
+                rowSums[row] += lineRow[col];
+                colSums[col] += lineRow[col];
+            }
+        }
+
+        System.out.println("Row sums: " + Arrays.stream(rowSums).mapToObj(String::valueOf).collect(Collectors.joining(", ")));
+        System.out.println("Column sums: " + Arrays.stream(colSums).mapToObj(String::valueOf).collect(Collectors.joining(", ")));
+
     }
 
     private static void matrixLoader(Scanner sc) {
@@ -77,8 +97,6 @@ public class Main {
 
         System.out.println(sum);
     }
-
-    ;
 
     private static void printDiagonals(Scanner sc) {
         int size = Integer.parseInt(sc.nextLine());
