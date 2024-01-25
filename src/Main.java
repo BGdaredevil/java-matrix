@@ -18,7 +18,28 @@ public class Main {
 //        sumDiagonals(sc);
 //        matrixLoader(sc);
 //        matrixSumRowsCols(sc);
-        zeroRowCol(sc);
+//        zeroRowCol(sc);
+        sumBoundary(sc);
+
+    }
+
+    private static void sumBoundary(Scanner sc) {
+        int[] rowCol = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+        int rows = rowCol[0];
+        int cols = rowCol[1];
+        int sum = 0;
+
+        for (int row = 0; row < rows; row++) {
+            int[] lineRow = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+            if (row == 0 || row == rows - 1) {
+                sum += Arrays.stream(lineRow).sum();
+                continue;
+            }
+
+            sum += lineRow[0] + lineRow[cols - 1];
+        }
+
+        System.out.println(sum);
     }
 
     private static void zeroRowCol(Scanner sc) {
