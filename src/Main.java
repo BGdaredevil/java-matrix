@@ -9,6 +9,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         System.out.println("input");
+
 //        compareMatrix(sc);
 //        matrixAdder(sc);
 //        getMatrixIntersect(sc);
@@ -19,8 +20,28 @@ public class Main {
 //        matrixLoader(sc);
 //        matrixSumRowsCols(sc);
 //        zeroRowCol(sc);
-        sumBoundary(sc);
+//        sumBoundary(sc);
 
+        rotateMatrix(sc);
+    }
+
+    private static void rotateMatrix(Scanner sc) {
+        int[] rowCol = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+        int rows = rowCol[0];
+        int cols = rowCol[1];
+        int[][] result = new int[cols][rows];
+
+        for (int row = 0; row < rows; row++) {
+            int[] lineRow = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+
+            for (int col = 0; col < cols; col++) {
+                result[col][rows - 1 - row] = lineRow[col];
+            }
+        }
+
+        for (int[] item : result) {
+            System.out.println(Arrays.stream(item).mapToObj(String::valueOf).collect(Collectors.joining(" ")));
+        }
     }
 
     private static void sumBoundary(Scanner sc) {
