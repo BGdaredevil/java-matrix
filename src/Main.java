@@ -22,8 +22,111 @@ public class Main {
 //        zeroRowCol(sc);
 //        sumBoundary(sc);
 //        rotateMatrix(sc);
-        excelColumnNames(sc);
+//        excelColumnNames(sc);
+        checkChess(sc);
 
+    }
+
+    private static void checkChess(Scanner sc) {
+        // todo rework to check diagonals below only
+
+        String result = "No";
+        int[] rowCol = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+        int rows = rowCol[0];
+        int cols = rowCol[1];
+
+        int[][] board = new int[rows][cols];
+
+        for (int row = 0; row < rows; row++) {
+            int[] rowLine = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+            System.arraycopy(rowLine, 0, board[row], 0, cols);
+        }
+
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                int item = board[row][col];
+                if (item == 0) {
+                    continue;
+                }
+
+                int rowOcc = (int) Arrays.stream(board[row]).filter(e -> e == 1).count();
+                if (rowOcc > 1) {
+                    result = "Yes";
+                    System.out.println(result);
+                    return;
+                }
+
+                int colOcc = 0;
+                for (int r = 0; r < rows; r++) {
+                    if (board[r][col] == 1) {
+                        colOcc++;
+                    }
+                }
+
+                if (colOcc > 1) {
+                    result = "Yes";
+                    System.out.println(result);
+                    return;
+                }
+
+                int firstR = 0;
+                int firstC = (col - row);
+                int secondR = 0;
+                int secondC = (col + row);
+
+                int firstFound = 0;
+                while (firstR < rows && firstC < cols) {
+                    if (firstC < 0) {
+                        firstR++;
+                        firstC++;
+                        continue;
+                    }
+                    if (board[firstR][firstC] == 1) {
+                        firstFound++;
+                        if (firstFound > 1) {
+                            result = "Yes";
+                            System.out.println(result);
+                            return;
+                        }
+                    }
+                    firstR++;
+                    firstC++;
+                }
+
+                int secondFound = 0;
+                while (secondR<rows && secondC >=0) {
+                    if (secondC >= cols ) {
+                        secondR++;
+                        secondC--;
+                        continue;
+                    }
+                    if (board[secondR][secondC] == 1) {
+                        secondFound++;
+                        if (secondFound > 1) {
+                            result = "Yes";
+                            System.out.println(result);
+                            return;
+                        }
+                    }
+
+                    secondR++;
+                    secondC--;
+                }
+
+                /*
+                * 0 - 0 - 0        0 0 0 0 0 0
+                * 0 0 1 0 0        0 0 0 0 0 0
+                * 0 - 0 - 0        0 0 0 0 0 0
+                * - 0 0 0 -        0 1 0 0 0 0
+                * 0 0 0 0 0        0 0 0 0 0 0
+                *                  0 0 0 0 0 0
+
+                */
+
+            }
+        }
+
+        System.out.println(result);
     }
 
     private static void excelColumnNames(Scanner sc) {
