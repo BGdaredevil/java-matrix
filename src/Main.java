@@ -26,8 +26,30 @@ public class Main {
 //        checkChess(sc);
 //        borderFlip(sc);
 //        checkMagicSqare(sc);
-        traverseSpiral(sc);
+//        traverseSpiral(sc);
 
+        checkerBoard(sc);
+
+    }
+
+    private static void checkerBoard(Scanner sc) {
+        int size = sc.nextInt();
+        boolean reverse = true;
+
+        StringBuilder result = new StringBuilder(size * size);
+
+        for (int row = 0; row < size; row++) {
+            for (int col = 0; col < size; col++) {
+                if (reverse) {
+                    result.append(col % 2).append(" ");
+                } else {
+                    result.append((col + 1) % 2).append(" ");
+                }
+            }
+            reverse = !reverse;
+            result.append("\n");
+        }
+        System.out.println(result);
     }
 
     private static void traverseSpiral(Scanner sc) {
@@ -54,17 +76,17 @@ public class Main {
             }
             startR++;
             for (int i = startR; i < endR; ++i) {
-                result.append(board[i][endC-1]).append(" ");
+                result.append(board[i][endC - 1]).append(" ");
             }
             endC--;
             if (startR < endR) {
-                for (int i = endC-1; i >= startC; --i) {
-                    result.append(board[endR-1][i]).append(" ");
+                for (int i = endC - 1; i >= startC; --i) {
+                    result.append(board[endR - 1][i]).append(" ");
                 }
                 endR--;
             }
             if (startC < endC) {
-                for (int i = endR-1; i >= startR; --i) {
+                for (int i = endR - 1; i >= startR; --i) {
                     result.append(board[i][startC]).append(" ");
                 }
                 startC++;
