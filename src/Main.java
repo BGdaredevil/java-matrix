@@ -17,8 +17,43 @@ public class Main {
 //        printDiagonals(sc);
 //        sumDiagonals(sc);
 //        matrixLoader(sc);
-        matrixSumRowsCols(sc);
+//        matrixSumRowsCols(sc);
+        zeroRowCol(sc);
+    }
 
+    private static void zeroRowCol(Scanner sc) {
+        int[] rowCol = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+        int rows = rowCol[0];
+        int cols = rowCol[1];
+
+        int[][] matrix = new int[rows][cols];
+        int[][] result = new int[rows][cols];
+
+        for (int row = 0; row < rows; row++) {
+            int[] lineRow = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+            for (int col = 0; col < cols; col++) {
+                matrix[row][col] = lineRow[col];
+                result[row][col] = matrix[row][col];
+            }
+        }
+
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                if (matrix[row][col] == 0) {
+                    for (int r = 0; r < rows; r++) {
+                        result[r][col] = 0;
+                    }
+
+                    for (int c = 0; c < cols; c++) {
+                        result[row][c] = 0;
+                    }
+                }
+            }
+        }
+
+        for (int[] resRow : result) {
+            System.out.println(Arrays.stream(resRow).mapToObj(String::valueOf).collect(Collectors.joining(" ")));
+        }
     }
 
     private static void matrixSumRowsCols(Scanner sc) {
@@ -36,7 +71,6 @@ public class Main {
 
         System.out.println("Row sums: " + Arrays.stream(rowSums).mapToObj(String::valueOf).collect(Collectors.joining(", ")));
         System.out.println("Column sums: " + Arrays.stream(colSums).mapToObj(String::valueOf).collect(Collectors.joining(", ")));
-
     }
 
     private static void matrixLoader(Scanner sc) {
