@@ -34,6 +34,43 @@ public class Main {
         int[] rowCol = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
         int rows = rowCol[0];
         int cols = rowCol[1];
+
+        int[][] board = new int[rows][cols];
+        for (int row = 0; row < rows; row++) {
+            int[] rowLine = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+            System.arraycopy(rowLine, 0, board[row], 0, cols);
+        }
+
+        StringBuilder result = new StringBuilder(rows * cols);
+
+        int startC = 0;
+        int endC = cols;
+        int startR = 0;
+        int endR = rows;
+
+        while (startC < endC && startR < endR) {
+            for (int i = startC; i < endC; ++i) {
+                result.append(board[startR][i]).append(" ");
+            }
+            startR++;
+            for (int i = startR; i < endR; ++i) {
+                result.append(board[i][endC-1]).append(" ");
+            }
+            endC--;
+            if (startR < endR) {
+                for (int i = endC-1; i >= startC; --i) {
+                    result.append(board[endR-1][i]).append(" ");
+                }
+                endR--;
+            }
+            if (startC < endC) {
+                for (int i = endR-1; i >= startR; --i) {
+                    result.append(board[i][startC]).append(" ");
+                }
+                startC++;
+            }
+        }
+        System.out.println(result);
     }
 
     private static void checkMagicSqare(Scanner sc) {
