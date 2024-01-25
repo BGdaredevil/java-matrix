@@ -21,8 +21,26 @@ public class Main {
 //        matrixSumRowsCols(sc);
 //        zeroRowCol(sc);
 //        sumBoundary(sc);
+//        rotateMatrix(sc);
+        excelColumnNames(sc);
 
-        rotateMatrix(sc);
+    }
+
+    private static void excelColumnNames(Scanner sc) {
+        char[] input = sc.nextLine().toUpperCase().toCharArray();
+        int result = 0;
+        ArrayDeque<Integer> base26 = new ArrayDeque<>(input.length);
+        for (char item : input) {
+            int code = item - 'A' + 1;
+            base26.push(code);
+        }
+
+        int size = base26.size();
+        for (int i = 0; i < size; i++) {
+            result += base26.pop() * (int) Math.pow(26, i);
+        }
+
+        System.out.println(result);
     }
 
     private static void rotateMatrix(Scanner sc) {
