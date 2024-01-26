@@ -27,8 +27,54 @@ public class Main {
 //        borderFlip(sc);
 //        checkMagicSqare(sc);
 //        traverseSpiral(sc);
+//        checkerBoard(sc);
+        getMax3x3(sc);
 
-        checkerBoard(sc);
+    }
+
+    private static void getMax3x3(Scanner sc) {
+        int[] rowCol = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+        int rows = rowCol[0];
+        int cols = rowCol[1];
+        int result = Integer.MIN_VALUE;
+        int[][] bestMatrix = new int[3][3];
+
+        int[][] board = new int[rows][cols];
+        for (int row = 0; row < rows; row++) {
+            int[] rowLine = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+            System.arraycopy(rowLine, 0, board[row], 0, cols);
+        }
+
+        for (int row = 0; row < rows; row++) {
+            if ((row + 3) > rows) {
+                continue;
+            }
+
+            for (int col = 0; col < cols; col++) {
+                if ((col + 3) > cols) {
+                    continue;
+                }
+                int[][] tempMatrix = new int[3][3];
+                int tempSum = 0;
+
+                for (int r = 0; r < (3); r++) {
+                    for (int c = 0; c < (3); c++) {
+                        tempSum += board[r + row][c + col];
+                        tempMatrix[r][c] = board[r + row][c + col];
+                    }
+                }
+
+                if (tempSum > result) {
+                    result = tempSum;
+                    bestMatrix = tempMatrix;
+                }
+            }
+        }
+
+        System.out.println("Sum = " + result);
+        for (int[] resRow : bestMatrix) {
+            System.out.println(Arrays.stream(resRow).mapToObj(String::valueOf).collect(Collectors.joining(" ")));
+        }
 
     }
 
