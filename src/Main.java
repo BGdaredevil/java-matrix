@@ -28,7 +28,72 @@ public class Main {
 //        checkMagicSqare(sc);
 //        traverseSpiral(sc);
 //        checkerBoard(sc);
-        getMax3x3(sc);
+//        getMax3x3(sc);
+        snowFlakes(sc);
+
+    }
+
+    private static void snowFlakes(Scanner sc) {
+        int[] rowCol = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+        int rows = rowCol[0];
+        int cols = rowCol[1];
+        boolean madeChange = true;
+        String[][] board = new String[rows][cols];
+        String[][] prevBoard = new String[rows][cols];
+
+        for (int row = 0; row < rows; row++) {
+            String[] rowLine = sc.nextLine().split(" ");
+            System.arraycopy(rowLine, 0, board[row], 0, cols);
+            System.arraycopy(rowLine, 0, prevBoard[row], 0, cols);
+        }
+
+        while (madeChange) {
+            madeChange = false;
+
+            for (String[] resRow : board) {
+                System.out.println(String.join(" ", resRow));
+            }
+
+            for (int row = 1; row < rows; row++) {
+                for (int col = 0; col < cols; col++) {
+                    String prevSymbol = prevBoard[row - 1][col];
+                    String currSymbol = board[row][col];
+
+                    if (prevSymbol.equals("0")) {
+                        continue;
+                    }
+
+                    if (prevSymbol.equals("#")) {
+                        continue;
+                    }
+
+                    if (prevSymbol.equals("*") && currSymbol.equals("#")) {
+                        continue;
+                    }
+
+                    if (prevSymbol.equals("*") && currSymbol.equals("0")) {
+                        board[row][col] = prevSymbol;
+                        board[row - 1][col] = "0";
+                        madeChange = true;
+
+                        continue;
+                    }
+
+                    madeChange = false;
+                }
+            }
+
+            for (int i = 0; i < rows; i++) {
+                String[] resRow = board[i];
+//                System.out.println(String.join(" ", resRow));
+                System.arraycopy(resRow, 0, prevBoard[i], 0, cols);
+            }
+
+            if (madeChange) {
+                System.out.println("=".repeat(cols * 2 - 1));
+            }
+
+        }
 
     }
 
